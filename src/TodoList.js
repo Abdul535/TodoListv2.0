@@ -12,6 +12,7 @@ class TodoList extends Component {
     ]}
     this.RemoveItem = this.RemoveItem.bind(this)
     this.AddItem = this.AddItem.bind(this)
+    this.UpdateItem = this.UpdateItem.bind(this)
   }
 
   AddItem(Item){
@@ -29,11 +30,24 @@ class TodoList extends Component {
     })
   }
 
+  UpdateItem(id, UpdatedItem){
+    console.log("updating "+ UpdatedItem +' with id '+ id)
+    const updatedTodo = this.state.todos.map(todo => {
+        if(todo.id === id){
+            return {...todo, task: UpdatedItem}
+        }
+        return todo
+    })
+    this.setState({
+        todos: updatedTodo
+    })
+  }
+
   render() {
     const List = this.state.todos.map((e)=>{
         return(
         <ul key={e.id}>
-            <Todo ActionRemoveItem={this.RemoveItem} chiz={e}/>
+            <Todo ActionRemoveItem={this.RemoveItem} ActionUpdateItem={this.UpdateItem} chiz={e}/>
         </ul>
         )
     })
