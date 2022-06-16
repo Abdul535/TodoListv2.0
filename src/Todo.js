@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
+import './Todo.css'
 export class Todo extends Component {
    constructor(props){
     super(props)
     this.state = {
         edit : false,
-        task : this.props.chiz.task 
+        task : this.props.chiz.task,
+        isStroke : false 
     }
     this.handleRemove = this.handleRemove.bind(this)
     this.toggleform = this.toggleform.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleSave = this.handleSave.bind(this)
+    this.toggleStroke = this.toggleStroke.bind(this)
    }
   handleRemove(e){
     this.props.ActionRemoveItem(this.props.chiz.id)
@@ -27,6 +30,11 @@ export class Todo extends Component {
         edit: !this.state.edit
     })
   }
+  toggleStroke(){
+    this.setState({
+        isStroke : !this.state.isStroke
+    })
+  }
   handleChange(e){
     this.setState({
         [e.target.name] : e.target.value
@@ -42,7 +50,7 @@ export class Todo extends Component {
         </form>)
        : 
       (<div>
-      <li >{this.props.chiz.task}</li>
+      <li className={this.state.isStroke===true? 'stroke': ''} onClick={this.toggleStroke}>{this.props.chiz.task}</li>
       <button onClick={this.handleRemove}>X</button>
       <button onClick={this.toggleform}>Edit</button>
       </div>)
